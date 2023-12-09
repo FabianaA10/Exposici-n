@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Visualizar animal</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<style>
+body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background-color: #F3D9E2;
+    }
+
+    h1 {
+      color: #B6656B; /* Color azul claro */
+      font-size: 25px;
+    }
+
+    p {
+      margin-bottom: 10px;
+    }
+
+    form {
+      margin-top: 20px;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      border: 1px solid #B6656B;
+    }
+    
+    select{
+	  width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      border: 1px solid #B6656B;
+	}
+
+    input[type="submit"] {
+      background-color: #B6656B; /* Color verde */
+      color: white; /* Texto blanco */
+      padding: 10px;
+      cursor: pointer;
+      border: 1px solid #B6656B;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #B6656B; /* Cambio de color al pasar el mouse */
+    }
+
+    a {
+      color: #B6656B; /* Color azul claro */
+      text-decoration: none;
+      display: block;
+      margin-top: 20px;
+    }
+
+    a:hover {
+      text-decoration: underline;
+      color: #B6656B;
+    }
+	
+</style>
+</head>
+<body>
+    <h1>Ver animal</h1>
+    <p>ID : <span th:text="${animal.id}"></span></p>
+    <p>Nombre : <span th:text="${animal.nombre}"></span></p>
+    <p>Especie : <span th:text="${animal.especieAnimal.nombre}"></span></p>
+    <p>Hábitat : <span th:text="${animal.habitatAnimal.nombre}"></span></p>
+
+    <h1>Actualizar datos</h1>
+    <form th:action="@{/animal/guardar}" method="post" th:object="${animal}">    
+        <input type="hidden" th:field="*{id}">    
+        <input type="text" th:field="*{nombre}" placeholder="Nombre">    
+        <select th:field="*{especieAnimal}" name="especieAnimal">        
+            <option th:each="es : ${especies}" th:value="${es.id}" th:text="${es.nombre}">Nombre de la especie</option>    
+        </select>    
+        <select th:field="*{habitatAnimal}" name="habitatAnimal">
+            <option th:each="habitat : ${habitats}" th:value="${habitat.id}" th:text="${habitat.nombre}">Nombre del hábitat</option>
+        </select>
+        <input type="submit" value="Actualizar">
+    </form>
+
+    <a th:href="@{'/animal/listar'}">Regresar a la lista</a>
+</body>
+
+
+</html>

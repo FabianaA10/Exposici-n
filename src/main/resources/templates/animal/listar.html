@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Animales</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #F3D9E2;
+    }
+
+    h1 {
+        color: #B6656B; 
+        text-align: center; 
+        font-size: 30px;
+        margin-top: 20px;
+    }
+    input {
+    background-color: #F9F9F8; 
+    color: #B6656B; 
+    border: 1px solid #B6656B; 
+}
+
+    form, table {
+        margin: 20px auto; 
+        width: 50%; 
+    }
+
+input[type="submit"]{
+	color: #F9F9F8 ;
+	background-color: #B6656B;
+	transition: all 2s;
+}
+
+input[type="submit"]:hover {
+    border-color: #B6656B;
+    color: #B6656B;
+    background-color: #F9F9F8;
+}
+
+.table {
+    width: 97%;
+    border-collapse: collapse;
+    margin: 20px;
+}
+
+.table th, .table td {
+    border: 1px solid white; 
+    padding: 8px;
+    text-align: left;
+}
+
+.table th {
+    background-color: #D9BAC2; 
+    color: #F9F9F8;
+}
+
+.table tbody tr:nth-child(odd) {
+    background-color: white; 
+}
+
+a {
+    color: #B6656B;
+    text-decoration: none;
+}
+
+/* Cambiar el color de los enlaces al pasar el mouse sobre ellos */
+a:hover {
+    text-decoration: underline;
+    color: #B6656B;
+}
+
+
+
+</style>
+
+</head>
+
+<body>
+
+<h1>GUARDAR ANIMAL</h1>
+<form th:action="@{/animal/guardar}" th:object="${animal}" method="post">
+    <input type="text" th:field="*{nombre}" placeholder="Nombre">
+    <select th:field="*{especieAnimal.id}">
+        <option th:each="es : ${especies}" th:value="${es.id}" th:text="${es.nombre}"></option>
+    </select>
+    <select th:field="*{habitatAnimal.id}">
+        <option th:each="habitat : ${habitats}" th:value="${habitat.id}" th:text="${habitat.nombre}"></option>
+    </select>
+    <input type="submit" value="Guardar">
+</form>
+
+<h1>LISTA DE ANIMALES</h1>
+<table class="table">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Especie</th>
+        <th>Hábitat</th>
+        <th>Ver</th>
+        <th>Eliminar</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="a: ${ani}">
+        <td th:text="${a.id}"></td>
+        <td th:text="${a.nombre}"></td>
+        <td th:text="${a.especieAnimal.nombre}"></td>
+        <td th:text="${a.habitatAnimal.nombre}"></td>
+        <td>
+            <a th:href="@{'/animal/editar/'+ ${a.id}}">Ver</a>
+        </td>
+        <td>
+            <a th:href="@{'/animal/eliminar/'+ ${a.id}}">Eliminar</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+
+
+</html>
+
